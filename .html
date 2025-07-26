@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>个人学术主页</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* 全局样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+        }
+        
+        :root {
+            --primary-color: #1a56db;
+            --secondary-color: #1e429f;
+            --accent-color: #d97706;
+            --light-bg: #f9fafb;
+            --dark-text: #111827;
+            --gray-text: #4b5563;
+            --border-color: #e5e7eb;
+            --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+        
+        body {
+            background-color: #f8f9fa;
+            color: var(--dark-text);
+            line-height: 1.6;
+            padding-top: 60px;
+        }
+        
+        a {
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        a:hover {
+            color: var(--secondary-color);
+            text-decoration: underline;
+        }
+        
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        section {
+            padding: 60px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        section:last-child {
+            border-bottom: none;
+        }
+        
+        /* 导航栏 */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            z-index: 1000;
+            padding: 12px 0;
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+        
+        .nav-links a {
+            color: var(--gray-text);
+            font-weight: 500;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--gray-text);
+        }
+        
+        /* 头部区域 */
+        .header {
+            display: flex;
+            align-items: flex-start;
+            gap: 40px;
+            padding: 40px 0;
+        }
+        
+        .profile-img {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid white;
+            box-shadow: var(--card-shadow);
+        }
+        
+        .header-info {
+            flex: 1;
+        }
+        
+        .name {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            color: var(--dark-text);
+        }
+        
+        .title {
+            font-size: 1.2rem;
+            color: var(--gray-text);
+            margin-bottom: 20px;
+        }
+        
+        .contact-info {
+            margin-top: 20px;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            color: var(--gray-text);
+        }
+        
+        .contact-icon {
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
+            color: var(--primary-color);
+        }
+        
+        /* 研究兴趣 */
+        .research-interests {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 20px;
+        }
+        
+        .interest-tag {
+            background-color: var(--light-bg);
+            padding: 6px 16px;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            border: 1px solid var(--border-color);
+            color: var(--gray-text);
+        }
+        
+        /* 新闻部分 */
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+        
+        .news-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: var(--card-shadow);
+            transition: transform 0.3s ease;
+        }
+        
+        .news-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .news-date {
+            color: var(--accent-color);
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .news-icon {
+            margin-right: 8px;
+        }
+        
+        .news-title {
+            font-size: 1.1rem;
+            margin-bottom: 12px;
+            color: var(--dark-text);
+        }
+        
+        .news-content {
+            color: var(--gray-text);
+            font-size: 0.95rem;
+        }
+        
+        /* 研究成果部分 */
+        .publication-list {
+            margin-top: 25px;
+        }
+        
+        .publication-item {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 15px;
+            box-shadow: var(--card-shadow);
+            transition: all 0.3s ease;
+        }
+        
+        .publication-item:hover {
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.07);
+        }
+        
+        .pub-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--dark-text);
+        }
+        
+        .pub-authors {
+            color: var(--gray-text);
+            font-size: 0.95rem;
+            margin-bottom: 8px;
+        }
+        
+        .pub-venue {
+            font-size: 0.9rem;
+            color: var(--gray-text);
+            margin-bottom: 10px;
+            font-style: italic;
+        }
+        
+        .pub-desc {
+            margin-top: 12px;
+            color: var(--gray-text);
+            font-size: 0.95rem;
+        }
+        
+        .pub-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .pub-link {
+            display: inline-flex;
+            align-items: center;
+            color: var(--primary-color);
+            font-size: 0.9rem;
+        }
+        
+        .pub-link i {
+            margin-right: 5px;
+        }
+        
+        /* 荣誉部分 */
+        .honors-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+        
+        .honor-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: var(--card-shadow);
+        }
+        
+        .honor-icon {
+            font-size: 2.5rem;
+            color: var(--accent-color);
+            margin-bottom: 15px;
+        }
+        
+        .honor-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--dark-text);
+        }
+        
+        .honor-date {
+            color: var(--gray-text);
+            font-size: 0.9rem;
+            margin-bottom: 12px;
+        }
+        
+        .honor-desc {
+            color: var(--gray-text);
+            font-size: 0.95rem;
+        }
+        
+        /* 页脚 */
+        footer {
+            background-color: var(--light-bg);
+            padding: 40px 0;
+            text-align: center;
+            color: var(--gray-text);
+            font-size: 0.9rem;
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .social-link {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gray-text);
+            box-shadow: var(--card-shadow);
+            transition: all 0.3s ease;
+        }
+        
+        .social-link:hover {
+            color: var(--primary-color);
+            transform: translateY(-3px);
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .research-interests {
+                justify-content: center;
+            }
+            
+            .contact-info {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+        
+        /* 部分标题样式 */
+        .section-title {
+            font-size: 1.8rem;
+            margin-bottom: 30px;
+            color: var(--dark-text);
+            position: relative;
+            padding-bottom: 15px;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50px;
+            height: 4px;
+            background-color: var(--primary-color);
+            border-radius: 2px;
+        }
+        
+        /* 动画效果 */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .animate-fade {
+            animation: fadeIn 0.6s ease forwards;
+        }
+        
+        .delay-1 { animation-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.2s; }
+        .delay-3 { animation-delay: 0.3s; }
+        .delay-4 { animation-delay: 0.4s; }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav>
+        <div class="container nav-container">
+            <div class="logo">个人学术主页</div>
+            <div class="nav-links">
+                <a href="#about">关于</a>
+                <a href="#research">研究</a>
+                <a href="#publications">成果</a>
+                <a href="#news">新闻</a>
+                <a href="#honors">荣誉</a>
+                <a href="#contact">联系</a>
+            </div>
+            <button class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- 头部区域 -->
+        <section id="about">
+            <div class="header">
+                
+                <div class="header-info">
+                    <h1 class="name">宋逸群</h1>
+                    <p class="title">深圳技术大学大数据与互联网学院数据科学与大数据专业本科生</p>
+                    
+                    <p>深圳技术大学大数据与互联网学院数据科学与大数据专业本科生，导师为老师，研究方向为强化学习、深度学习。</p>
+                    
+                    <div class="research-interests">
+                        <div class="interest-tag">强化学习</div>
+                        <div class="interest-tag">深度学习</div>
+                    </div>
+                    
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <div class="contact-icon"><i class="fas fa-envelope"></i></div>
+                            <div>yiqunsong6@gmail.com</div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon"><i class="fas fa-graduation-cap"></i></div>
+                            <div>深圳技术大学 · 大数据与互联网学院</div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div>
+                            <div>广东省深圳市坪山区兰田路3002号</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 研究问题 -->
+        <section id="research">
+            <h2 class="section-title">研究问题</h2>
+            <p>我的研究致力于：</p>
+            <ul style="margin-top: 20px; padding-left: 20px; color: var(--gray-text);">
+                <li style="margin-bottom: 12px;">如何？</li>
+                <li style="margin-bottom: 12px;">如何</li>
+            </ul>
+            <p style="margin-top: 20px;">我刚刚踏上这条漫长的道路，我将利用我的青春和好奇心，抓住更多机会和时间，深入探索这些问题。</p>
+        </section>
+
+        <!-- 新闻动态 -->
+        <section id="news">
+            <h2 class="section-title">最新动态</h2>
+            <div class="news-grid">
+                <div class="news-card animate-fade">
+                    <div class="news-date"><i class="fas fa-calendar-alt news-icon"></i>2025年4月</div>
+                    <h3 class="news-title">工作被接收</h3>
+                    <p class="news-content">展示了潜力。</p>
+                </div>
+                
+                <div class="news-card animate-fade delay-1">
+                    <div class="news-date"><i class="fas fa-calendar-alt news-icon"></i>2025年5月</div>
+                    <h3 class="news-title">开源</h3>
+                    <p class="news-content">欢迎讨论与合作！</p>
+                </div>
+                
+                </div>
+            </div>
+        </section>
+
+        <!-- 研究成果 -->
+        <section id="publications">
+            <h2 class="section-title">研究成果</h2>
+            <div class="publication-list">
+                <div class="publication-item animate-fade">
+                    <h3 class="pub-title">数据集</h3>
+                    <div class="pub-authors">*, *, *, 等. †</div>
+                    <div class="pub-venue">NeurIPS 2024</div>
+                    <p class="pub-desc">本文介绍了，一个数据集，包含它采用，利用工具。</p>
+                    <div class="pub-links">
+                        <a href="#" class="pub-link"><i class="fas fa-file-pdf"></i> 论文</a>
+                        <a href="#" class="pub-link"><i class="fab fa-github"></i> 代码</a>
+                        <a href="#" class="pub-link"><i class="fas fa-database"></i> 数据集</a>
+                    </div>
+                </div>
+                
+                <div class="publication-item animate-fade delay-1">
+                    <h3 class="pub-title">弹性研究</h3>
+                    <div class="pub-authors">*, *, * *, 等. †</div>
+                    <div class="pub-venue"></div>
+                    <p class="pub-desc">本文</p>
+                    <div class="pub-links">
+                        <a href="#" class="pub-link"><i class="fas fa-file-pdf"></i> 论文</a>
+                        <a href="#" class="pub-link"><i class="fab fa-github"></i> 代码</a>
+                    </div>
+                </div>
+                
+                <div class="publication-item animate-fade delay-2">
+                    <h3 class="pub-title"></h3>
+                    <div class="pub-authors">*, *, , 等. †</div>
+                    <div class="pub-venue">ICML 2024</div>
+                    <p class="pub-desc">我们推出了</p>
+                    <div class="pub-links">
+                        <a href="#" class="pub-link"><i class="fas fa-file-pdf"></i> 论文</a>
+                        <a href="#" class="pub-link"><i class="fas fa-database"></i> 数据集</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 荣誉奖项 -->
+        <section id="honors">
+            <h2 class="section-title">荣誉奖项</h2>
+            <div class="honors-list">
+                <div class="honor-card animate-fade">
+                    <div class="honor-icon"><i class="fas fa-award"></i></div>
+                    <h3 class="honor-title">深圳技术大学新生奖学金</h3>
+                    <div class="honor-date">2024年</div>
+                    <p class="honor-desc"></p>
+                </div>
+                
+                <div class="honor-card animate-fade delay-1">
+                    <div class="honor-icon"><i class="fas fa-medal"></i></div>
+                    <h3 class="honor-title">奖学金</h3>
+                    <div class="honor-date">2024年</div>
+                    <p class="honor-desc">获奖者</p>
+                </div>
+                
+                <div class="honor-card animate-fade delay-2">
+                    <div class="honor-icon"><i class="fas fa-star"></i></div>
+                    <h3 class="honor-title">谷歌学术引用</h3>
+                    <div class="honor-date">2024年</div>
+                    <p class="honor-desc">谷歌学术引用累计0次</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- 页脚 -->
+    <footer id="contact">
+        <div class="container">
+            <div class="social-links">
+                <a href="#" class="social-link"><i class="fab fa-google"></i></a>
+                <a href="#" class="social-link"><i class="fab fa-github"></i></a>
+                <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+            <p>© 2025 个人学术主页 | 深圳技术大学大数据与互联网学院</p>
+            <p style="margin-top: 10px;">邮箱: yiqunsong6@gmail.com</p>
+        </div>
+    </footer>
+
+    <script>
+        // 简单的滚动动画效果
+        document.addEventListener('DOMContentLoaded', function() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animate-fade');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+            
+            document.querySelectorAll('.publication-item, .news-card, .honor-card').forEach(card => {
+                if (!card.classList.contains('animate-fade')) {
+                    observer.observe(card);
+                }
+            });
+            
+            // 移动端菜单切换
+            const menuBtn = document.querySelector('.mobile-menu-btn');
+            const navLinks = document.querySelector('.nav-links');
+            
+            menuBtn.addEventListener('click', () => {
+                navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+            });
+        });
+    </script>
+</body>
+</html>
